@@ -1,7 +1,4 @@
-import Dashboard from './pages/Dashboard'
 import { useNavigate } from "react-router-dom"
-
-<Route path="/dashboard" element={<Dashboard />} />
 
 function Dashboard() {
 
@@ -9,178 +6,198 @@ function Dashboard() {
 
   const role = localStorage.getItem("role")
 
-  // BLOCK NON SELLERS
-
   if (role !== "seller") {
-
     return (
-
-      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white">
-
-        <h1 className="text-4xl">
-
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
+        <h1 className="text-5xl font-bold text-red-500">
           Access Denied
         </h1>
-
       </div>
     )
   }
 
-  // LOGOUT
-
   const logout = () => {
-
     localStorage.removeItem("token")
-
     localStorage.removeItem("role")
-
     navigate("/login")
   }
 
   return (
-
     <div className="min-h-screen bg-slate-950 text-white flex">
 
-      {/* SIDEBAR */}
+      {/* Sidebar */}
 
-      <div className="w-72 bg-slate-900 p-8 border-r border-slate-800">
+      <div className="w-72 bg-slate-900 border-r border-slate-800 p-8">
 
-        <h1 className="text-3xl font-bold text-indigo-400 mb-12">
-
-          📚 Seller Panel
-
+        <h1 className="text-3xl font-bold text-indigo-500 mb-12">
+          📚 BookHub Seller
         </h1>
 
-        <div className="space-y-6">
+        <div className="space-y-5">
 
-          <button className="w-full text-left hover:text-indigo-400">
-
-            Dashboard
-
+          <button className="w-full text-left p-3 rounded-lg hover:bg-slate-800 transition">
+            🏠 Dashboard
           </button>
 
-          <button className="w-full text-left hover:text-indigo-400">
-
-            My Books
-
+          <button className="w-full text-left p-3 rounded-lg hover:bg-slate-800 transition">
+            📚 My Books
           </button>
 
-          <button className="w-full text-left hover:text-indigo-400">
-
-            Orders
-
+          <button className="w-full text-left p-3 rounded-lg hover:bg-slate-800 transition">
+            ➕ Add Book
           </button>
 
-          <button className="w-full text-left hover:text-indigo-400">
+          <button className="w-full text-left p-3 rounded-lg hover:bg-slate-800 transition">
+            📦 Orders
+          </button>
 
-            Analytics
+          <button className="w-full text-left p-3 rounded-lg hover:bg-slate-800 transition">
+            📈 Analytics
+          </button>
 
+          <button className="w-full text-left p-3 rounded-lg hover:bg-slate-800 transition">
+            ⚙ Settings
           </button>
 
         </div>
 
         <button
           onClick={logout}
-          className="
-            mt-20
-            bg-red-500
-            hover:bg-red-600
-            px-5
-            py-3
-            rounded-xl
-            w-full
-          "
+          className="mt-16 bg-red-500 hover:bg-red-600 w-full py-3 rounded-xl font-semibold"
         >
-
           Logout
-
         </button>
 
       </div>
 
-      {/* MAIN CONTENT */}
+      {/* Main Content */}
 
       <div className="flex-1 p-10">
 
-        <h2 className="text-5xl font-bold mb-10">
+        {/* Top Bar */}
 
-          Seller Dashboard
-        </h2>
+        <div className="flex justify-between items-center mb-10">
 
-        {/* CARDS */}
+          <div>
+            <h2 className="text-5xl font-bold">
+              Seller Dashboard
+            </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <p className="text-slate-400 mt-2">
+              Welcome back 👋
+            </p>
+          </div>
 
-          <div className="bg-slate-900 p-8 rounded-2xl">
+          <input
+            type="text"
+            placeholder="Search books..."
+            className="
+              bg-slate-900
+              border
+              border-slate-700
+              px-5
+              py-3
+              rounded-xl
+              outline-none
+            "
+          />
+        </div>
 
-            <h3 className="text-slate-400">
+        {/* Stats */}
 
-              Total Books
-            </h3>
+        <div className="grid md:grid-cols-4 gap-6">
 
-            <p className="text-5xl font-bold mt-4 text-indigo-400">
-
+          <div className="bg-slate-900 rounded-2xl p-8">
+            <p className="text-slate-400">Total Books</p>
+            <h3 className="text-5xl font-bold text-indigo-400 mt-3">
               12
-
-            </p>
-
+            </h3>
           </div>
 
-          <div className="bg-slate-900 p-8 rounded-2xl">
-
-            <h3 className="text-slate-400">
-
-              Orders
-            </h3>
-
-            <p className="text-5xl font-bold mt-4 text-green-400">
-
+          <div className="bg-slate-900 rounded-2xl p-8">
+            <p className="text-slate-400">Orders</p>
+            <h3 className="text-5xl font-bold text-green-400 mt-3">
               38
-
-            </p>
-
+            </h3>
           </div>
 
-          <div className="bg-slate-900 p-8 rounded-2xl">
-
-            <h3 className="text-slate-400">
-
-              Revenue
+          <div className="bg-slate-900 rounded-2xl p-8">
+            <p className="text-slate-400">Revenue</p>
+            <h3 className="text-5xl font-bold text-yellow-400 mt-3">
+              Rs.48K
             </h3>
+          </div>
 
-            <p className="text-5xl font-bold mt-4 text-yellow-400">
-
-              Rs. 48K
-
-            </p>
-
+          <div className="bg-slate-900 rounded-2xl p-8">
+            <p className="text-slate-400">Customers</p>
+            <h3 className="text-5xl font-bold text-pink-400 mt-3">
+              85
+            </h3>
           </div>
 
         </div>
 
-        {/* RECENT ACTIVITY */}
+        {/* Recent Books */}
 
-        <div className="mt-14 bg-slate-900 rounded-2xl p-8">
+        <div className="mt-12">
 
           <h3 className="text-3xl font-bold mb-6">
-
-            Recent Activity
-
+            Recent Books
           </h3>
 
-          <div className="space-y-4 text-slate-300">
+          <div className="grid md:grid-cols-3 gap-6">
 
-            <p>
-              ✅ New book added
-            </p>
+            <div className="bg-slate-900 rounded-2xl overflow-hidden">
 
-            <p>
-              📦 3 new orders received
-            </p>
+              <img
+                src="https://images.unsplash.com/photo-1544947950-fa07a98d237f"
+                alt=""
+                className="h-56 w-full object-cover"
+              />
 
-            <p>
-              💰 Revenue increased
-            </p>
+              <div className="p-5">
+
+                <h4 className="font-bold text-xl">
+                  React Mastery
+                </h4>
+
+                <p className="text-slate-400 mt-2">
+                  Modern React Development
+                </p>
+
+                <button className="mt-4 bg-indigo-600 px-4 py-2 rounded-lg">
+                  Edit
+                </button>
+
+              </div>
+
+            </div>
+
+            <div className="bg-slate-900 rounded-2xl overflow-hidden">
+
+              <img
+                src="https://images.unsplash.com/photo-1512820790803-83ca734da794"
+                alt=""
+                className="h-56 w-full object-cover"
+              />
+
+              <div className="p-5">
+
+                <h4 className="font-bold text-xl">
+                  Python Cloud
+                </h4>
+
+                <p className="text-slate-400 mt-2">
+                  DevOps and Cloud Guide
+                </p>
+
+                <button className="mt-4 bg-indigo-600 px-4 py-2 rounded-lg">
+                  Edit
+                </button>
+
+              </div>
+
+            </div>
 
           </div>
 

@@ -14,7 +14,7 @@ app = FastAPI()
 Base.metadata.create_all(bind=engine)
 
 pwd_context = CryptContext(
-    schemes=["bcrypt"],
+    schemes=["pbkdf2_sha256"],
     deprecated="auto"
 )
 

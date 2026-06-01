@@ -11,6 +11,7 @@ import {
 import App from './App'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Dashboard from './pages/Dashboard'
 
 ReactDOM.createRoot(
   document.getElementById('root')
@@ -20,11 +21,15 @@ ReactDOM.createRoot(
 
     <Routes>
 
-      <Route path="/" element={<App />} />
+      <Route path="/" element={<Login />} />
 
       <Route path="/login" element={<Login />} />
 
       <Route path="/register" element={<Register />} />
+
+      <Route path="/dashboard" element={<Dashboard />} />
+
+      <Route path="/books" element={<App />} />
 
     </Routes>
 

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 
 function Login() {
 
@@ -10,8 +10,9 @@ function Login() {
     password: ""
   })
 
-  const handleChange = (e) => {
+  const [loading, setLoading] = useState(false)
 
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -22,87 +23,152 @@ function Login() {
 
     e.preventDefault()
 
-    const response = await fetch(
-      "http://localhost:8001/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
+    setLoading(true)
+
+    try {
+
+      const response = await fetch(
+        "http://localhost:8003/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(formData)
+        }
+      )
+
+      const data = await response.json()
+
+      if (data.token) {
+
+        localStorage.setItem(
+          "token",
+          data.token
+        )
+
+        localStorage.setItem(
+          "role",
+          data.role
+        )
+
+        alert("Login Successful")
+
+        navigate("/dashboard")
       }
-    )
 
-    const data = await response.json()
+      else {
 
-    if (data.access_token) {
+        alert(data.message || "Login Failed")
+      }
 
-      localStorage.setItem(
-        "token",
-        data.access_token
-      )
+    } catch (error) {
 
-      localStorage.setItem(
-        "role",
-        data.role
-      )
+      console.log(error)
 
-      alert("Login Successful")
-
-      navigate("/dashboard")
+      alert("Server Connection Failed")
     }
 
-    else {
-
-      alert("Invalid Credentials")
-    }
+    setLoading(false)
   }
 
   return (
 
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-6">
 
-      <div className="bg-slate-900 p-10 rounded-2xl w-full max-w-md">
+      <div className="w-full max-w-md bg-slate-900 rounded-3xl p-10 shadow-2xl border border-slate-800">
 
-        <h1 className="text-4xl font-bold mb-8 text-indigo-400">
+        <div className="text-center mb-10">
 
-          Login
+          <h1 className="text-5xl font-bold text-indigo-400">
+            📚 Book Marketplace
+          </h1>
 
-        </h1>
+          <p className="text-slate-400 mt-4">
+            Login to your account
+          </p>
 
-        <form onSubmit={loginUser} className="space-y-5">
+        </div>
+
+        <form
+          onSubmit={loginUser}
+          className="space-y-5"
+        >
 
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Email Address"
+            value={formData.email}
             onChange={handleChange}
-            className="w-full p-4 rounded-xl bg-slate-800"
+            className="
+              w-full
+              p-4
+              rounded-xl
+              bg-slate-800
+              text-white
+              border
+              border-slate-700
+              focus:outline-none
+              focus:border-indigo-500
+            "
           />
 
           <input
             type="password"
             name="password"
             placeholder="Password"
+            value={formData.password}
             onChange={handleChange}
-            className="w-full p-4 rounded-xl bg-slate-800"
+            className="
+              w-full
+              p-4
+              rounded-xl
+              bg-slate-800
+              text-white
+              border
+              border-slate-700
+              focus:outline-none
+              focus:border-indigo-500
+            "
           />
 
           <button
+            type="submit"
+            disabled={loading}
             className="
               w-full
-              bg-indigo-500
-              hover:bg-indigo-600
               py-4
+              bg-indigo-600
+              hover:bg-indigo-700
               rounded-xl
+              font-semibold
+              transition
             "
           >
 
-            Login
+            {loading ? "Signing In..." : "Login"}
 
           </button>
 
         </form>
+
+        <div className="text-center mt-8">
+
+          <p className="text-slate-400">
+
+            Don't have an account?
+
+            <Link
+              to="/register"
+              className="text-indigo-400 ml-2"
+            >
+              Register
+            </Link>
+
+          </p>
+
+        </div>
 
       </div>
 
