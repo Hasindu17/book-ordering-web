@@ -33,7 +33,14 @@ services:
     container_name: order-service
 
     ports:
-      - "8002:8002"
+        - "8002:8002"
 
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "8003:8003"
+    depends_on:
+      - db
 volumes:
   postgres_data:

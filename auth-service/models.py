@@ -1,8 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from database import Base
 
-# USER TABLE
-
 class User(Base):
 
     __tablename__ = "users"
@@ -16,19 +14,3 @@ class User(Base):
     password = Column(String)
 
     role = Column(String)
-
-# BOOK TABLE
-
-class Book(Base):
-
-    __tablename__ = "books"
-
-    id = Column(Integer, primary_key=True, index=True)
-
-    title = Column(String)
-
-    category = Column(String)
-
-    author = Column(String)
-
-    price = Column(Integer)
